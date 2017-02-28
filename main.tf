@@ -6,7 +6,6 @@ provider "aws" {
 
 resource "aws_vpc" "vpc" {
     cidr_block       = "${var.vpc_netprefix}.${var.vpc_netnumber}/${var.vpc_netmask}"
-    instance_tenancy = "dedicated"
 
     tags {
         Name = "${var.res_nameprefix}${var.env}${var.vpc_namesuffix}"
