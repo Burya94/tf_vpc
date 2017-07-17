@@ -51,7 +51,7 @@ resource "aws_subnet" "pub_sn" {
 resource "aws_subnet" "priv_sn" {
     count             = "${length(${aws_subnet.pub_sn.*.id})}"
     vpc_id            = "${aws_vpc.vpc.id}"
-    availability_zone = "${element(["${aws_subnet.pub_sn.*.availability_zone}"], count.index)}"
+    availability_zone = "${element(${aws_subnet.pub_sn.*.availability_zone}, count.index)}"
     cidr_block        = "${var.vpc_netprefix}.${var.priv_sn_netnumber}${count.index}.0/${var.priv_sn_netmask}"
     depends_on        = ["aws_subnet.pub_sn"]
     tags {
