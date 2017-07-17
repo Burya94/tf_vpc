@@ -37,3 +37,12 @@ variable "pub_sn_netnumber" {
 variable "pub_sn_netmask" {
     default = "24"
 }
+variable "priv_sn_netnumber" {
+    default = "24"
+}
+variable "priv_sn_netmask" {
+    default = "24"
+}
+variable "priv_sn_namesuffix" {
+  default = "-vpc-priv-sn"
+}
