@@ -10,6 +10,9 @@ output "pub_sn_ids" {
 output "priv_sn_ids" {
     value = ["${aws_subnet.priv_sn.*.id}"]
 }
+output "vpc_def_rt_id" {
+    value = "${aws_default_route_table.vpc_def_rt.id}"
+}
 output "pub_sn_azs" {
     value = ["${aws_subnet.pub_sn.*.availability_zone}"]
 }
