@@ -65,3 +65,6 @@ variable "pub_sn_rt_namesuffix" {
     default = "rt_pub"
 }
 variable "puppet_addr" {}
+variable "path_to_file" {
+  default = "./puppetagent.sh"
+}
