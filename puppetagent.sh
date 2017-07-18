@@ -18,4 +18,4 @@ Facter.add(:role) do
   end
 end
 EOF
-export FACTERLIB="/root/"
+echo "export FACTERLIB=/root/" >> /root/.bash_profile
