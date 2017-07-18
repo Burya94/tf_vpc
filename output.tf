@@ -43,3 +43,6 @@ output "pub_sn_netmask" {
 output "priv_sn_azs" {
     value = ["${aws_subnet.priv_sn.*.availability_zone}"]
   }
+output "pub_net" {
+    value = "${var.vpc_netprefix}.${var.pub_sn_netnumber}0.0/${var.pub_sn_netmask}"
+}
