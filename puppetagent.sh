@@ -10,3 +10,12 @@ cat >> /etc/hosts << EOF
 ${puppet_ip} ${dns_name}
 EOF
 service puppet start
+#add  role
+cat >> /root/role.rb << EOF
+Facter.add(:role) do
+  setcode do
+    'nat_bastion_agent'
+  end
+end
+EOF
+export FACTERLIB="/root/"
