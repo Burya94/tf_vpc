@@ -42,3 +42,22 @@ variable "priv_sn_namesuffix" {
 }
 variable "priv_sn_netnumber" {}
 variable "priv_sn_netmask" {}
+variable "instance_key_name" {}
+variable "nat_instance_ami"{
+    default = "ami-dd3dd7cb"
+}
+variable "nat_instance_type"{
+    default = "t2.micro"
+}
+variable "nat_instance_namesuffix" {
+    default = "-nat-inst"
+}
+variable "nat_instance_addr" {
+    default = "5"
+}
+variable "nat_inst_sg_namesuffix" {
+    default = "-nat-inst-sg"
+}
+variable "priv_sn_rt_namesuffix"{
+    default = "rt_priv"
+}

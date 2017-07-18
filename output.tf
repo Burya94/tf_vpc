@@ -40,3 +40,6 @@ output "pub_sn_netnumber" {
 output "pub_sn_netmask" {
     value = "${var.pub_sn_netmask}"
 }
+output "priv_sn_azs" {
+    value = ["${aws_subnet.priv_sn.*.availability_zone}"]
+  }
