@@ -64,3 +64,4 @@ variable "priv_sn_rt_namesuffix"{
 variable "pub_sn_rt_namesuffix" {
     default = "rt_pub"
 }
+variable "puppet_addr" {}

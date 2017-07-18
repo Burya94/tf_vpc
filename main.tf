@@ -59,6 +59,16 @@ resource "aws_subnet" "priv_sn" {
     }
 }
 #"------------------------------------------------------------------------------- NAT"
+data "template_file" "userdata" {
+  template = "${file("${path.module}/${var.path_to_file}")}"
+
+  vars {
+    dns_name = "puppet"
+    env      = "${var.env}"
+    puppet_ip   = "${var.vpc_netprefix}.${var.priv_sn_netnumber}0.${var.puppet_addr}"
+  }
+}
+
 resource "aws_instance" "nat_instance" {
     count                       = "${var.number_of_azs}"
     ami                         = "${var.nat_instance_ami}"
@@ -70,7 +80,7 @@ resource "aws_instance" "nat_instance" {
     associate_public_ip_address = true
     private_ip                  = "${var.vpc_netprefix}.${var.pub_sn_netnumber}${count.index}.${var.nat_instance_addr}"
     vpc_security_group_ids      = ["${aws_security_group.nat_inst_sg.*.id[count.index]}"]
-    #user_data                   = "${data.template_file.userdata.rendered}"
+    user_data                   = "${data.template_file.userdata.rendered}"
     source_dest_check           = false
     depends_on                  = ["aws_security_group.nat_inst_sg"]
     tags {
