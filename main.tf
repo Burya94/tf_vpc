@@ -119,7 +119,7 @@ resource "aws_security_group" "nat_inst_sg" {
       from_port    = 8140
       to_port      = 8140
       protocol     = "tcp"
-      cidr_block   = ["${var.vpc_netprefix}.${var.priv_sn_netnumber}${count.index}.0/${var.priv_sn_netmask}"]
+      cidr_blocks   = ["${var.vpc_netprefix}.${var.priv_sn_netnumber}${count.index}.0/${var.priv_sn_netmask}"]
     }
 
     ingress {
