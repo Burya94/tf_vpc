@@ -4,9 +4,6 @@ output "vpc_id" {
 output "vpc_igw_id" {
     value = "${aws_internet_gateway.vpc_igw.id}"
 }
-output "vpc_def_rt_id" {
-    value = "${aws_default_route_table.vpc_def_rt.id}"
-}
 output "pub_sn_ids" {
     value = ["${aws_subnet.pub_sn.*.id}"]
 }

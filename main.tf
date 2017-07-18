@@ -22,16 +22,16 @@ resource "aws_internet_gateway" "vpc_igw" {
 }
 
 resource "aws_default_route_table" "vpc_def_rt" {
-    default_route_table_id = "${aws_vpc.vpc.default_route_table_id}"
+  default_route_table_id = "${aws_vpc.vpc.default_route_table_id}"
     route {
         cidr_block = "0.0.0.0/0"
         gateway_id = "${aws_internet_gateway.vpc_igw.id}"
     }
-    depends_on             = ["aws_vpc.vpc","aws_internet_gateway.vpc_igw"]
+  depends_on             = ["aws_vpc.vpc","aws_internet_gateway.vpc_igw"]
 
-    tags {
-        Name = "${var.res_nameprefix}${var.env}${var.vpc_def_rt_namesuffix}"
-    }
+  tags {
+       Name = "${var.res_nameprefix}${var.env}${var.vpc_def_rt_namesuffix}"
+   }
 }
 
 data "aws_availability_zones" "az_available" {}
@@ -71,6 +71,7 @@ resource "aws_instance" "nat_instance" {
     private_ip                  = "${var.vpc_netprefix}.${var.pub_sn_netnumber}${count.index}.${var.nat_instance_addr}"
     vpc_security_group_ids      = ["${aws_security_group.nat_inst_sg.*.id[count.index]}"]
     #user_data                   = "${data.template_file.userdata.rendered}"
+    source_dest_check           = false
     depends_on                  = ["aws_security_group.nat_inst_sg"]
     tags {
         Name = "${var.res_nameprefix}${var.env}${var.nat_instance_namesuffix}${count.index}"
@@ -91,12 +92,18 @@ resource "aws_route_table" "priv_sn_rt" {
     }
 }
 
-resource "aws_route_table_association" "rt_priv_sn_assoc" {
+resource "aws_route_table_association" "rt_pub_sn_assoc" {
     count          = "${var.number_of_azs}"
-    subnet_id      = "${aws_subnet.priv_sn.*.id[count.index]}"
-    route_table_id = "${aws_route_table.priv_sn_rt.*.id[count.index]}"
-    depends_on     = ["aws_route_table.priv_sn_rt"]
+    subnet_id      = "${aws_subnet.pub_sn.*.id[count.index]}"
+    route_table_id = "${aws_vpc.vpc.default_route_table_id}"
+    depends_on     = ["aws_default_route_table.vpc_def_rt"]
 }
+
+resource "aws_main_route_table_association" "main_rt" {
+  vpc_id         = "${aws_vpc.vpc.id}"
+  route_table_id = "${aws_route_table.priv_sn_rt.id}"
+}
+
 resource "aws_security_group" "nat_inst_sg" {
     count  = "${var.number_of_azs}"
     name   = "${var.res_nameprefix}${var.env}${var.nat_inst_sg_namesuffix}${count.index}"

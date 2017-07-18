@@ -61,3 +61,6 @@ variable "nat_inst_sg_namesuffix" {
 variable "priv_sn_rt_namesuffix"{
     default = "rt_priv"
 }
+variable "pub_sn_rt_namesuffix" {
+    default = "rt_pub"
+}
