@@ -46,3 +46,6 @@ output "priv_sn_azs" {
 output "pub_net" {
     value = "${var.vpc_netprefix}.${var.pub_sn_netnumber}0.0/${var.pub_sn_netmask}"
 }
+output "nat_sg"{
+    value = "${aws_security_group.nat_inst_sg.id}"
+}
