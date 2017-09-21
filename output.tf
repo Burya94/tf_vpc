@@ -49,3 +49,6 @@ output "pub_net" {
 output "nat_sg"{
     value = "${aws_security_group.nat_inst_sg.id}"
 }
+output "def_sg" {
+    value = "${aws_vpc.vpc.default_security_group_id}"
+}
